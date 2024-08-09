@@ -1,4 +1,6 @@
-package racingcar;
+package racingcar.model;
+
+import racingcar.MovableStrategy;
 
 import java.util.Random;
 
