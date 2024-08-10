@@ -25,15 +25,14 @@ public class RacingCarController {
         this.racingCarService = racingCarService;
     }
 
-    // 입력받은 names 쉼표 분리
-    // String[] arrayString = carNameList.split(","); -> 이거 나중에 넣기
-    // 입력받은 시도 횟수
-
     // submit 누르면
     @PostMapping(path = "/plays")
     public ResponseEntity<RacingCarResult> play(@RequestBody final RacingCarRequest request) {
-        final List<String> names = Arrays.stream(request.getNames().split(DELIMITER))
+        // 입력받은 이름 ,로 분리 후 리스트 저장
+        final List<String> names = Arrays.stream(request.getNames().split(","))
                 .collect(Collectors.toList());
+
+        // 입력 받은 시도 횟수
         final int count = request.getCount();
 
         final RacingCarResult racingCarResult = racingCarService.playRacingCar(names, count);
@@ -41,8 +40,8 @@ public class RacingCarController {
         return ResponseEntity.ok().body(racingCarResult);
     }
 
-    @GetMapping(path = "/plays")
-    public List<RacingCarResponse> getLog() {
-        return racingCarService.getRacingCarLog();
-    }
+//    @GetMapping(path = "/plays")
+//    public List<RacingCarResponse> getLog() {
+//        return racingCarService.getRacingCarLog();
+//    }
 }
