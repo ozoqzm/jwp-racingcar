@@ -7,6 +7,7 @@ import racingcar.model.Car;
 import racingcar.model.dto.RacingCarResult;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RacingCarService {
@@ -25,10 +26,14 @@ public class RacingCarService {
         return racingCarResult;
     }
 
-    public List<Car> generateRacingCars(String names) {
-        // 이름 리스트 토대로 자동차 리스트
+    // 차 리스트 생성 (객체들)
+    public List<Car> generateRacingCars(final List<String> names) {
+        // 리스트 자동차 객체 생성
+        final List<Car> cars = names.stream()
+                .map(name -> new Car(name, 0))
+                .collect(Collectors.toList());
 
-        // return racingCarList;
+         return cars;
     }
 
 }
