@@ -1,17 +1,15 @@
 package racingcar.model;
 
-import racingcar.MovableStrategy;
-
 import java.util.Random;
 
 public class Car implements MovableStrategy {
     // 상수
     private static final int FORWARD_NUM = 4;
     private int position; // 현재 위치
-    public String carName;
+    public String name;
 
-    public Car(String carName, int position) {
-        this.carName = carName;
+    public Car(String name, int position) {
+        this.name = name;
         this.position = position;
     }
     public void move(int number) {
@@ -28,8 +26,8 @@ public class Car implements MovableStrategy {
         return position;
     }
 
-    public String getCarName() {
-        return carName;
+    public String getName() {
+        return name;
     }
 
     @Override
