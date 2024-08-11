@@ -23,7 +23,7 @@ public class RacingGame {
     }
     public void printCarsDistance() {
         for (Car c : cars) {
-            System.out.print(c.getCarName() + ":");
+            System.out.print(c.getName() + ":");
             for (int i = 0; i < c.getPosition(); i++)
                 System.out.print("-");
             System.out.println();
@@ -40,7 +40,7 @@ public class RacingGame {
         List<String> winners = new ArrayList<>();
         for (Car car : cars) {
             if (car.getPosition() == maxPosition) {
-                winners.add(car.getCarName());
+                winners.add(car.getName());
             }
         }
         System.out.println("우승자: " + winners + "가 최종 우승했습니다.");
