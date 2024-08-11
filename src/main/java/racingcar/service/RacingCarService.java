@@ -17,20 +17,23 @@ public class RacingCarService {
     private final CarDao carDao;
     private List<String> winners = new ArrayList<>();
 
+    @Autowired
+    public RacingCarService(final JdbcCarDao jdbcCarDao) {
+        this.carDao = jdbcCarDao;
+    }
+
     // 플레이
     public RacingCarResult playRacingCar(final List<String> names, final int trialCount) {
         final List<Car> racingCars = generateRacingCars(names);
 
-        // 주행 결과 객체
-        // 우승자들을 어떻게 가져오면 좋을 지??
-        final RacingCarResult racingCarResult = new RacingCarResult(winners, racingCars);
-
         // 경주하기.. 우승자 판별
         raceGame(racingCars, trialCount);
 
+        // 주행 결과 객체
+        final RacingCarResult racingCarResult = new RacingCarResult(winners, racingCars);
+
         // 경기결과테이블(시도횟수, 우승자), 자동차테이블(이름,포지션) 데이터베이스에 저장
         saveResult(trialCount, racingCarResult);
-
 
         return racingCarResult;
     }
@@ -69,6 +72,14 @@ public class RacingCarService {
 
     // 데이터 베이스 저장
     public void saveResult(final int trialCount, final RacingCarResult racingCarResult) {
-        // final int gameId = JdbcCarDao.insert(trialCount);
+       List<Car> racingCars = racingCarResult.getRacingCars();
+
+        String winners = String.join(",", racingCarResult.getWinners());
+
+       final int gameId = carDao.insertResult(trialCount, winners);
+
+       for (Car car : racingCars) {
+           final int carId = carDao.insertCar(car, gameId);
+       }
     }
 }

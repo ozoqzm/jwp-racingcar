@@ -10,10 +10,12 @@ import java.util.List;
 
 public interface CarDao {
 
-    int insert(final Car car, final int gameId, final boolean isWinner);
+    int insertResult(final int trialCount, final String winners);
+
+    int insertCar(final Car car, final int gameId);
 
     List<String> selectWinners(final int gameId);
 
-    List<Car> selectCarsBy(final int gameId);
+    List<Car> selectCars(final int gameId);
 
 }

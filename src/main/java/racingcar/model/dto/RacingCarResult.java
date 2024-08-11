@@ -13,10 +13,6 @@ public class RacingCarResult {
         this.racingCars = racingCars;
     }
 
-    public boolean isWinner(final Car car) {
-        return winners.contains(car.getName());
-    }
-
     public List<String> getWinners() {
         return winners;
     }
