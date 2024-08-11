@@ -1,12 +1,13 @@
-package racingcar.controller;
+package racingcar;
 
+import racingcar.controller.RacingGame;
 import racingcar.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class ConsoleApplication {
     public static void main(final String[] args) {
         Scanner sc = new Scanner(System.in);
 

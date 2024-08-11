@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@RestController  // @Controller + @ResponseBody
 public class RacingCarController {
     private final RacingCarService racingCarService;
 
@@ -25,23 +25,22 @@ public class RacingCarController {
         this.racingCarService = racingCarService;
     }
 
-    // submit 누르면
     @PostMapping(path = "/plays")
     public ResponseEntity<RacingCarResult> play(@RequestBody final RacingCarRequest request) {
         // 입력받은 이름 ,로 분리 후 리스트 저장
         final List<String> names = Arrays.stream(request.getNames().split(","))
                 .collect(Collectors.toList());
 
-        // 입력 받은 시도 횟수
         final int count = request.getCount();
 
         final RacingCarResult racingCarResult = racingCarService.playRacingCar(names, count);
 
-        return ResponseEntity.ok().body(racingCarResult);
+        return ResponseEntity.ok().body(racingCarResult); // HTTP 응답 반환, 200 OK와 함께 RacingCarResult 응답 본문으로 포함
     }
 
+    // 모든 게임 로그 조회
     @GetMapping(path = "/plays")
     public List<RacingCarResponse> getLog() {
-        return racingCarService.getRacingCarLog(); // 다시 보기
+        return racingCarService.getRacingCarLog(); // List<RacingCarResponse> 반환
     }
 }

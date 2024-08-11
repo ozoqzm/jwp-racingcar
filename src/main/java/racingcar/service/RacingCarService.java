@@ -101,7 +101,7 @@ public class RacingCarService {
         final List<Integer> gameIds = carDao.selectGameIds();
 
         return gameIds.stream()
-                .map(this::generateLog)
+                .map(this::generateLog) // 각 게임 ID 경주 정보 RacingCarResponse 객체로 변환
                 .collect(Collectors.toUnmodifiableList());
     }
 
