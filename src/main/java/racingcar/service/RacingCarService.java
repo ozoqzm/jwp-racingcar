@@ -3,6 +3,7 @@ package racingcar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import racingcar.dao.CarDao;
+import racingcar.dao.JdbcCarDao;
 import racingcar.model.Car;
 import racingcar.model.dto.RacingCarResult;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 public class RacingCarService {
 
     private final CarDao carDao;
+    private List<String> winners = new ArrayList<>();
 
     // 플레이
     public RacingCarResult playRacingCar(final List<String> names, final int trialCount) {
@@ -21,7 +23,7 @@ public class RacingCarService {
 
         // 주행 결과 객체
         // 우승자들을 어떻게 가져오면 좋을 지??
-        final RacingCarResult racingCarResult = new RacingCarResult(우승자 이름들, 경주차들);
+        final RacingCarResult racingCarResult = new RacingCarResult(winners, racingCars);
 
         // 경주하기.. 우승자 판별
         raceGame(racingCars, trialCount);
@@ -51,13 +53,13 @@ public class RacingCarService {
             }
         }
 
-        // 우승자 가리지
+        // 우승자 가리기
         int maxPosition = 0;
         for (Car car : racingCars)
             if (car.getPosition() > maxPosition) {
                 maxPosition = car.getPosition();
             }
-        List<String> winners = new ArrayList<>();
+
         for (Car car : racingCars) {
             if (car.getPosition() == maxPosition) {
                 winners.add(car.getName());
@@ -67,6 +69,6 @@ public class RacingCarService {
 
     // 데이터 베이스 저장
     public void saveResult(final int trialCount, final RacingCarResult racingCarResult) {
-
+        // final int gameId = JdbcCarDao.insert(trialCount);
     }
 }
