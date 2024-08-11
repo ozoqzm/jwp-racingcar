@@ -52,13 +52,23 @@ public class JdbcCarDao implements CarDao {
 
     // 해당 경주 우승자 조회
     @Override
-    public List<String> selectWinners(final int gameId) {
-
+    public String selectWinners(final int gameId) {
+        final String sql = "SELECT winners FROM play_result WHERE play_result_id = ? ";
+        return jdbcTemplate.queryForObject(
+                sql,
+                (resultSet, rowNum) -> resultSet.getString("winners"),
+                gameId
+        );
     }
 
     // 해당 경주 자동차들 조회
     @Override
     public List<Car> selectCars(final int gameId) {
-
+        final String sql = "SELECT name, position FROM cars WHERE play_result_id = ?";
+        return jdbcTemplate.query(
+                sql,
+                (resultSet, rowNum) -> new Car(resultSet.getString("name"), resultSet.getInt("position")),
+                gameId
+        );
     }
 }

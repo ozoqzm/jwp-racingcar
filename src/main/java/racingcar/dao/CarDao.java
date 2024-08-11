@@ -14,7 +14,7 @@ public interface CarDao {
 
     int insertCar(final Car car, final int gameId);
 
-    List<String> selectWinners(final int gameId);
+    String selectWinners(final int gameId);
 
     List<Car> selectCars(final int gameId);
 

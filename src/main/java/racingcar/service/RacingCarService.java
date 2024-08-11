@@ -82,4 +82,16 @@ public class RacingCarService {
            final int carId = carDao.insertCar(car, gameId);
        }
     }
+
+    public String getWinnerByGameId(final int gameId) {
+        final String winners = carDao.selectWinners(gameId);
+       
+        return winners;
+    }
+
+    public List<Car> getRacingCarsByGameId(final int gameId) {
+        final List<Car> cars = carDao.selectCars(gameId);
+
+        return cars;
+    }
 }
