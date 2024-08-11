@@ -1,8 +1,8 @@
 package racingcar.model.dto;
 
 public class RacingCarRequest {
-    private final String names; // 참가자 입력 이름들
-    private final int count; // 시도 횟수
+    private final String names;
+    private final int count;
 
     public RacingCarRequest(final String names, final int count) {
         this.names = names;

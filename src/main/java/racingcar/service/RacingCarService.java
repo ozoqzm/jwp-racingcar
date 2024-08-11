@@ -58,7 +58,6 @@ public class RacingCarService {
                 car.move(car.getRandomNo());
             }
         }
-
         // 우승자 가리기
         int maxPosition = 0;
         for (Car car : racingCars)
@@ -81,9 +80,7 @@ public class RacingCarService {
 
        final int gameId = carDao.insertResult(trialCount, winners);
 
-       for (Car car : racingCars) {
-           final int carId = carDao.insertCar(car, gameId);
-       }
+        racingCars.forEach(car -> carDao.insertCar(car, gameId));
     }
 
     public List<String> getWinnerByGameId(final int gameId) {
