@@ -18,4 +18,5 @@ public interface CarDao {
 
     List<Car> selectCars(final int gameId);
 
+    List<Integer> selectGameIds();
 }

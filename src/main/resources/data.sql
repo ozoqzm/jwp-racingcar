@@ -9,9 +9,11 @@ CREATE TABLE PLAY_RESULT
 );
 CREATE TABLE CARS
 (
+    id          INT         NOT NULL AUTO_INCREMENT,
     play_result_id BIGINT      NOT NULL,
     name           VARCHAR(10) NOT NULL,
     position       INT         NOT NULL,
     FOREIGN KEY (play_result_id) REFERENCES PLAY_RESULT (id)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    PRIMARY KEY (id)
 )

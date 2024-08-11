@@ -53,7 +53,7 @@ public class JdbcCarDao implements CarDao {
     // 해당 경주 우승자 조회
     @Override
     public String selectWinners(final int gameId) {
-        final String sql = "SELECT winners FROM play_result WHERE play_result_id = ? ";
+        final String sql = "SELECT winners FROM play_result WHERE id = ? ";
         return jdbcTemplate.queryForObject(
                 sql,
                 (resultSet, rowNum) -> resultSet.getString("winners"),
@@ -69,6 +69,15 @@ public class JdbcCarDao implements CarDao {
                 sql,
                 (resultSet, rowNum) -> new Car(resultSet.getString("name"), resultSet.getInt("position")),
                 gameId
+        );
+    }
+
+    @Override
+    public List<Integer> selectGameIds() {
+        final String sql = "SELECT id FROM play_result";
+        return jdbcTemplate.query(
+                sql,
+                (resultSet, rowNum) -> resultSet.getInt("id")
         );
     }
 }

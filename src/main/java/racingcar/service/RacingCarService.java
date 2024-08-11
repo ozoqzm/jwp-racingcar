@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import racingcar.dao.CarDao;
 import racingcar.dao.JdbcCarDao;
 import racingcar.model.Car;
+import racingcar.model.dto.RacingCarResponse;
 import racingcar.model.dto.RacingCarResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,11 +31,12 @@ public class RacingCarService {
         // 경주하기.. 우승자 판별
         raceGame(racingCars, trialCount);
 
-        // 주행 결과 객체
-        final RacingCarResult racingCarResult = new RacingCarResult(winners, racingCars);
+        // 방금 주행 결과 객체 (수정)
+        final RacingCarResult racingCarResult = new RacingCarResult(new ArrayList<>(winners), racingCars); // 우승자 리스트 복사본을 생성해 전달 (반환 이전 초기화 문제 해결)
 
-        // 경기결과테이블(시도횟수, 우승자), 자동차테이블(이름,포지션) 데이터베이스에 저장
         saveResult(trialCount, racingCarResult);
+
+        winners.clear(); // 우승자 초기화
 
         return racingCarResult;
     }
@@ -83,9 +86,11 @@ public class RacingCarService {
        }
     }
 
-    public String getWinnerByGameId(final int gameId) {
-        final String winners = carDao.selectWinners(gameId);
-       
+    public List<String> getWinnerByGameId(final int gameId) {
+        final String swinners = carDao.selectWinners(gameId);
+        final List<String> winners = Arrays.stream(swinners.split(","))
+                .collect(Collectors.toList());
+
         return winners;
     }
 
@@ -94,4 +99,19 @@ public class RacingCarService {
 
         return cars;
     }
+
+    public List<RacingCarResponse> getRacingCarLog() {
+        final List<Integer> gameIds = carDao.selectGameIds();
+
+        return gameIds.stream()
+                .map(this::generateLog)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    private RacingCarResponse generateLog(final int gameId) {
+        final RacingCarResult result = new RacingCarResult(getWinnerByGameId(gameId), getRacingCarsByGameId(gameId));
+        return new RacingCarResponse(result);
+    }
+
+
 }

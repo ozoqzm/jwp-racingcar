@@ -40,8 +40,8 @@ public class RacingCarController {
         return ResponseEntity.ok().body(racingCarResult);
     }
 
-//    @GetMapping(path = "/plays")
-//    public List<RacingCarResponse> getLog() {
-//        return racingCarService.getRacingCarLog();
-//    }
+    @GetMapping(path = "/plays")
+    public List<RacingCarResponse> getLog() {
+        return racingCarService.getRacingCarLog(); // 다시 보기
+    }
 }
